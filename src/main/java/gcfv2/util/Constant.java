@@ -5,6 +5,7 @@ public class Constant {
     public static final String PROJECT_ID = "bluebirdcx-interview";
 
     public static final String INVALID_JSON = "Invalid JSON format in request body.";
+    public static final String REQUEST_BODY_IS_EMPTY = "Request body is empty.";
     public static final String LANGUAGE = "language";
     public static final String RESPONSE = "response";
 

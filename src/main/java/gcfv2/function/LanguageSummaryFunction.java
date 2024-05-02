@@ -31,8 +31,16 @@ public class LanguageSummaryFunction implements HttpFunction {
 
     @Override
     public void service(HttpRequest httpRequest, HttpResponse httpResponse) throws Exception {
-        JsonObject response = gson.fromJson(httpRequest.getReader(), JsonObject.class);
-        Optional<JsonElement> languageOpt = Optional.ofNullable(response.get(LANGUAGE));
+        Optional<JsonObject> requestBody = Optional.ofNullable(gson.fromJson(httpRequest.getReader(), JsonObject.class));
+
+        if (requestBody.isEmpty()) {
+            httpResponse.setContentType(CONTENT_TYPE);
+            httpResponse.setStatusCode(BAD_REQUEST_STATUS_CODE);
+            httpResponse.getWriter().write(REQUEST_BODY_IS_EMPTY);
+            return;
+        }
+
+        Optional<JsonElement> languageOpt = Optional.ofNullable(requestBody.get().get(LANGUAGE));
 
         if (languageOpt.isEmpty()) {
             httpResponse.setContentType(CONTENT_TYPE);
